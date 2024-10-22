@@ -4,13 +4,21 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"net/http"
 
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
 	_ "github.com/lib/pq"
 )
 
 func main() {
+	router := http.NewServeMux()
+
+	server := http.Server{
+		Addr:    ":8080",
+		Handler: router,
+	}
+	log.Println("Starting server on port :8080")
+	server.ListenAndServe()
+
 	db, err := sql.Open("postgres", "user=root password=rootroot dbname=db sslmode=dsiable")
 	if err != nil {
 		log.Fatal(err)
@@ -18,20 +26,11 @@ func main() {
 	defer db.Close()
 
 	fmt.Println("Starting server...")
-	app := fiber.New()
 
-	// Set up CORS middleware with your configuration
-	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:3000", // Adjust according to your client URL
-		AllowMethods:     "GET,POST,PUT,DELETE",
-		AllowCredentials: true,
-	}))
+	// Middleware
 
-	app.Get("/", func(c *fiber.Ctx) error {
+	// Routes
 
-		return c.SendString("Hello from Go with Fiber!")
-	})
-
-	log.Fatal(app.Listen(":8000"))
+	// log.Fatal(app.Listen(":8000"))
 
 }
