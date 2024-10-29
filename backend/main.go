@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	_ "github.com/lib/pq"
+	"github.com/saromazzotta/go_finance/middleware"
 )
 
 func main() {
@@ -14,7 +15,7 @@ func main() {
 
 	server := http.Server{
 		Addr:    ":8080",
-		Handler: router,
+		Handler: middleware.Logging(router),
 	}
 	log.Println("Starting server on port :8080")
 	server.ListenAndServe()
@@ -26,8 +27,6 @@ func main() {
 	defer db.Close()
 
 	fmt.Println("Starting server...")
-
-	// Middleware
 
 	// Routes
 
