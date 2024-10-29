@@ -11,25 +11,35 @@ import (
 )
 
 func main() {
-	router := http.NewServeMux()
-
-	server := http.Server{
-		Addr:    ":8080",
-		Handler: middleware.Logging(router),
-	}
-	log.Println("Starting server on port :8080")
-	server.ListenAndServe()
-
-	db, err := sql.Open("postgres", "user=root password=rootroot dbname=db sslmode=dsiable")
+	// Initialize the database connection
+	db, err := sql.Open("postgres", "user=root password=rootroot dbname=db sslmode=disable")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
 
-	fmt.Println("Starting server...")
+	fmt.Println("Database connected succesfully")
+
+	// Set up the router and middleware stack
+	router := http.NewServeMux()
+
+	stack := middleware.CreateStack(
+		middleware.Logging,
+		middleware.AllowCors,
+		// middleware.IsAuthed,
+		// middleware.CheckPermissions,
+	)
 
 	// Routes
+	// router.HandleFunc("http://localhost:8080/")
 
-	// log.Fatal(app.Listen(":8000"))
+	server := http.Server{
+		Addr:    ":8080",
+		Handler: stack(router),
+	}
+	log.Println("Starting server on port :8080")
+	if err := server.ListenAndServe(); err != nil {
+		log.Fatal("Server failed: ", err)
+	}
 
 }
