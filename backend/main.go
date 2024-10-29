@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -31,7 +32,7 @@ func main() {
 	)
 
 	// Routes
-	// router.HandleFunc("http://localhost:8080/")
+	router.HandleFunc("/hello", yourHandler)
 
 	server := http.Server{
 		Addr:    ":8080",
@@ -42,4 +43,13 @@ func main() {
 		log.Fatal("Server failed: ", err)
 	}
 
+}
+
+func yourHandler(w http.ResponseWriter, r *http.Request) {
+	response := map[string]string{
+		"message": "Hi from the backend!",
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
 }

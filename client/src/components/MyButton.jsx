@@ -8,7 +8,7 @@ const MyButton = () => {
 
     const handleFetchData = async () => {
         try {
-            const response = await fetch('http://localhost:8080');
+            const response = await fetch('http://localhost:8080/hello');
             if (!response) {
                 throw new Error("Network response was not okay.");
             }
