@@ -1,10 +1,10 @@
 import './App.css';
-import Button from './components/MyButton.jsx';
+import LoginForm from './components/LoginForm.jsx'
 
 function App() {
   return (
     <div className="App">
-      <Button />
+      <LoginForm />
     </div>
   );
 }

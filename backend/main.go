@@ -32,7 +32,7 @@ func main() {
 	)
 
 	// Routes
-	router.HandleFunc("/hello", yourHandler)
+	router.HandleFunc("/hello", testHandler)
 
 	server := http.Server{
 		Addr:    ":8080",
@@ -45,7 +45,7 @@ func main() {
 
 }
 
-func yourHandler(w http.ResponseWriter, r *http.Request) {
+func testHandler(w http.ResponseWriter, r *http.Request) {
 	response := map[string]string{
 		"message": "Hi from the backend!",
 	}
