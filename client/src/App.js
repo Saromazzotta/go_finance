@@ -1,10 +1,16 @@
 import './App.css';
-import LoginForm from './components/LoginForm.jsx'
+import { Routes, Route } from "react-router-dom";
+import LoginForm from './components/LoginForm.jsx';
+import RegistrationForm from './components/RegistrationForm.jsx';
 
 function App() {
   return (
     <div className="App">
-      <LoginForm />
+      <Routes>
+        <Route path="/" element={<LoginForm />} />
+        <Route path="/register" element={<RegistrationForm />} />
+      </Routes>
+      
     </div>
   );
 }

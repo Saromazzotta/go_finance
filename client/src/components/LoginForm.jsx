@@ -1,13 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 
 const LoginForm = () => {
-    // const navigate = useNavigate();
-    // const [userInfo, setUserInfo] = useState({
-    //     email: "",
-    //     password: ""
-    // })
+    const navigate = useNavigate();
+    const [userInfo, setUserInfo] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    })
+
+    const [errors, setErrors] = useState({});
+
+    const changeHandler = (e) => {
+        setUserInfo({
+            ...userInfo,
+            [e.target.name]: e.target.value
+        })
+    }
+
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        axios.post("http://localhost:8080/api/users/register", userInfo, { withCredentials: true })
+            .then(res => {
+                console.log(res)
+                navigate('/dashboard')
+            })
+        .catch(err => console.log(err))
+    }
 
     return (
         <div className="container mt-5">
@@ -30,35 +55,7 @@ const LoginForm = () => {
                     </form>
                 </div>
 
-                {/* Registration Form */}
-                <div className="col-md-6">
-                    <form>
-                        <h2 className="text-center fw-bold fst-italic mb-4">Register</h2>
-                        <div className="form-group">
-                            <label htmlFor="firstName" className="form-label">First Name:</label>
-                            <input type="text" className="form-control" id="firstName" name="firstName" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="lastName" className="form-label">Last Name:</label>
-                            <input type="text" className="form-control" id="lastName" name="lastName" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="registerEmail" className="form-label">Email:</label>
-                            <input type="email" className="form-control" id="registerEmail" name="email" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="registerPassword" className="form-label">Password:</label>
-                            <input type="password" className="form-control" id="registerPassword" name="password" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="confirmPassword" className="form-label">Confirm Password:</label>
-                            <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" />
-                        </div>
-                        <div className="form-group">
-                            <button type="submit" className="btn btn-success mt-3 fw-bold">Register</button>
-                        </div>
-                    </form>
-                </div>
+                
             </div>
         </div>
     );
@@ -68,4 +65,4 @@ const LoginForm = () => {
 }
 
 
-export default LoginForm;
+export default LoginForm
