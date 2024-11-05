@@ -11,6 +11,12 @@ import (
 	"github.com/saromazzotta/go_finance/middleware"
 )
 
+type Login struct {
+	HashedPassword string
+	SessionToken   string
+	CSRFToken      string
+}
+
 func main() {
 	// Initialize the database connection
 	db, err := sql.Open("postgres", "user=root password=rootroot dbname=db sslmode=disable")

@@ -59,27 +59,27 @@ function RegistrationForm() {
             <div className="container flex-grow-1 d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
                 <div className="row mx-auto">
                     <div className="col-lg">
-                        <form>
+                        <form onSubmit={submitHandler}>
                             <h2 className="text-center fw-bold fst-italic mb-4">Register</h2>
                             <div className="form-group">
                                 <label htmlFor="firstName" className="form-label">First Name:</label>
-                                <input type="text" className="form-control" id="firstName" name="firstName" />
+                                <input type="text" className="form-control" id="firstName" name="firstName" value={userInfo.firstName} onChange={changeHandler} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="lastName" className="form-label">Last Name:</label>
-                                <input type="text" className="form-control" id="lastName" name="lastName" />
+                                <input type="text" className="form-control" id="lastName" name="lastName" value={userInfo.lastName} onChange={changeHandler} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="registerEmail" className="form-label">Email:</label>
-                                <input type="email" className="form-control" id="registerEmail" name="email" />
+                                <input type="email" className="form-control" id="registerEmail" name="email" value={userInfo.email} onChange={changeHandler} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="registerPassword" className="form-label">Password:</label>
-                                <input type="password" className="form-control" id="registerPassword" name="password" />
+                                <input type="password" className="form-control" id="registerPassword" name="password" value={userInfo.password} onChange={changeHandler} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="confirmPassword" className="form-label">Confirm Password:</label>
-                                <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" />
+                                <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" value={userInfo.confirmPassword} onChange={changeHandler} />
                             </div>
                             <div className="form-group">
                                 <button type="submit" className="btn btn-success mt-3 fw-bold">Register</button>
