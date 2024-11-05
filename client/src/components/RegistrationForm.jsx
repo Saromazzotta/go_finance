@@ -1,9 +1,58 @@
 import React from 'react'
 import NavBar from './NavBar'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Footer from './Footer'
+import axios from 'axios'
+import { useState } from 'react'
 
 function RegistrationForm() {
+    const navigate = useNavigate();
+    const [userInfo, setUserInfo] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+    })
+
+    const [errors, setErrors] = useState({});
+
+    // Handle form input changes
+    const changeHandler = (e) => {
+        setUserInfo({
+            ...userInfo,
+            [e.target.name]: e.target.value
+        });
+    };
+
+
+    // Handle form submission
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        // Validation: check if password and confirm password match
+        if (userInfo.password !== userInfo.confirmPassword) {
+            setErrors({ password: "Passwords do not match" })
+            return;
+        }
+
+        // Clear errors before making the request
+        setErrors({});
+
+
+        // Make API request to register the user
+        axios.post("http://localhost:8080/api/users/register", userInfo, { withCredentials: true })
+            .then(res => {
+                console.log(res)
+                navigate('/dashboard')
+            })
+            .catch((err) => {
+                console.log(err);
+                // Set error message if registration fails
+                setErrors({ message: "Registration failed. Please try again." });
+            });
+    }
+
     return (
         <div className="d-flex flex-column min-vh-100"> {/* Full viewport height, flex layout */}
             <NavBar />
