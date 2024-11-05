@@ -9,15 +9,13 @@ import Footer from './Footer';
 const LoginForm = () => {
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({
-        firstName: "",
-        lastName: "",
         email: "",
         password: "",
-        confirmPassword: "",
     })
 
     const [errors, setErrors] = useState({});
 
+    // Handle form input changes
     const changeHandler = (e) => {
         setUserInfo({
             ...userInfo,
@@ -25,7 +23,7 @@ const LoginForm = () => {
         })
     }
 
-
+    // Handle form submission
     const submitHandler = (e) => {
         e.preventDefault();
         axios.post("http://localhost:8080/api/users/register", userInfo, { withCredentials: true })
@@ -39,10 +37,10 @@ const LoginForm = () => {
     return (
         <div className="d-flex flex-column min-vh-100">
             <NavBar />
-            <div className="container mt-5 flex-grow-1">
-                <div className="row">
+            <div className="container flex-grow-1 d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+                <div className="row mx-auto">
                     {/* Login Form */}
-                    <div className="col-md-3">
+                    <div className="col-lg">
                         <form>
                             <h2 className="text-center fw-bold fst-italic mb-4">Login</h2>
                             <div className="form-group">

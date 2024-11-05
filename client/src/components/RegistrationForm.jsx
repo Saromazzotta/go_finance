@@ -7,9 +7,9 @@ function RegistrationForm() {
     return (
         <div className="d-flex flex-column min-vh-100"> {/* Full viewport height, flex layout */}
             <NavBar />
-            <div className="container mt-5 flex-grow-1">
-                <div className="row">
-                    <div className="col-md-3">
+            <div className="container flex-grow-1 d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+                <div className="row mx-auto">
+                    <div className="col-lg">
                         <form>
                             <h2 className="text-center fw-bold fst-italic mb-4">Register</h2>
                             <div className="form-group">
