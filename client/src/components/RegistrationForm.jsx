@@ -41,7 +41,13 @@ function RegistrationForm() {
 
 
         // Make API request to register the user
-        axios.post("http://localhost:8080/api/users/register", userInfo, { withCredentials: true })
+        axios.post("http://localhost:8080/api/users/register", userInfo, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
             .then(res => {
                 console.log(res)
                 navigate('/dashboard')

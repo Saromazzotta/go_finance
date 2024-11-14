@@ -12,8 +12,11 @@ import (
 )
 
 type User struct {
-	Username string `json.Username`
-	Password string `json.Password`
+	FirstName        string `json:"firstName"`
+	LastName         string `json:"lastName"`
+	Username         string `json:"username"`
+	Password         string `json:"password"`
+	ConfirmPasswword string `json:"confirmPassword`
 }
 
 type Login struct {
@@ -47,6 +50,42 @@ func register(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid method", er)
 		return
 	}
+
+	var user User
+	err := json.NewDecoder(r.Body).Decode(&user)
+	if err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+	}
+
+	// Validiaton
+	if len(user.Username) < 8 || len(user.Password) < 8 {
+		http.Error(w, "Invalid username/password", http.StatusNotAcceptable)
+		return
+	}
+	if user.Password != user.ConfirmPassword {
+		http.Error(w, "Passwords do not match", http.StatusNotAcceptable)
+		return
+	}
+
+	// Hash the password before saving it
+	hashedPassword, err := middleware.HashPassword(password)
+	if err != nil {
+		http.Error(w, "Failed to hash password", http.StatusInternalServerError)
+		return
+	}
+
+	stmt := `INSERT INTO users (first_name, last_name, username, password) VALUES ($1, $2, $3, $4)`
+
+	_, err = db.Exec(stmt, firstName, lastName, username, hashedPassword)
+	if err != nil {
+		http.Error(w, "Failed to register user", http.StatusInternalServerError)
+		log.Println("Database error:", err)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	fmt.Fprintln(w, "User registered successfully")
+
 }
 
 func testHandler(w http.ResponseWriter, r *http.Request) {
@@ -74,7 +113,7 @@ func main() {
 
 	// Routes
 	router.HandleFunc("/hello", testHandler)
-	router.HandleFunc("/register", register)
+	router.HandleFunc("/api/users/register", register)
 
 	server := http.Server{
 		Addr:    ":8080",
