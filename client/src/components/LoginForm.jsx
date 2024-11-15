@@ -9,7 +9,7 @@ import Footer from './Footer';
 const LoginForm = () => {
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({
-        email: "",
+        username: "",
         password: "",
     })
 
@@ -26,12 +26,25 @@ const LoginForm = () => {
     // Handle form submission
     const submitHandler = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:8080/api/users/register", userInfo, { withCredentials: true })
+
+        
+        axios.post("http://localhost:8080/api/users/login", userInfo, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
             .then(res => {
                 console.log(res)
                 navigate('/dashboard')
             })
-        .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err);
+                setErrors({ message: "Login failed. Please try again." })
+            
+            });
+        
     }
 
     return (
@@ -41,15 +54,15 @@ const LoginForm = () => {
                 <div className="row mx-auto">
                     {/* Login Form */}
                     <div className="col-lg">
-                        <form>
+                        <form onSubmit={submitHandler}>
                             <h2 className="text-center fw-bold fst-italic mb-4">Login</h2>
                             <div className="form-group">
-                                <label htmlFor="loginEmail" className="form-label">Email:</label>
-                                <input type="email" className="form-control" id="loginEmail" name="email" />
+                                <label htmlFor="loginEmail" className="form-label">Username:</label>
+                                <input type="text" className="form-control" id="loginUsername" name="username" value={userInfo.username} onChange={changeHandler} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="loginPassword" className="form-label">Password:</label>
-                                <input type="password" className="form-control" id="loginPassword" name="password" />
+                                <input type="password" className="form-control" id="loginPassword" name="password" value={userInfo.password} onChange={changeHandler} />
                             </div>
                             <div className="form-group">
                                 <button type="submit" className="btn btn-primary mt-3 fw-bold">Login</button>

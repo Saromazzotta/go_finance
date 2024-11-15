@@ -10,7 +10,7 @@ function RegistrationForm() {
     const [userInfo, setUserInfo] = useState({
         firstName: "",
         lastName: "",
-        email: "",
+        username: "",
         password: "",
         confirmPassword: ""
     })
@@ -76,8 +76,8 @@ function RegistrationForm() {
                                 <input type="text" className="form-control" id="lastName" name="lastName" value={userInfo.lastName} onChange={changeHandler} />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="registerEmail" className="form-label">Email:</label>
-                                <input type="email" className="form-control" id="registerEmail" name="email" value={userInfo.email} onChange={changeHandler} />
+                                <label htmlFor="registerEmail" className="form-label">Username:</label>
+                                <input type="text" className="form-control" id="registerUsername" name="username" value={userInfo.username} onChange={changeHandler} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="registerPassword" className="form-label">Password:</label>
