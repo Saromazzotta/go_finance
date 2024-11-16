@@ -29,7 +29,7 @@ const Dashboard = () => {
                                 <div className="card">
                                     <div className="card-header bg-success text-white">Transaction List</div>
                                     <div className="card-body">
-                                        <button className="btn btn-primary mb-3">Add Transaction</button>
+                                        <button className="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addTransactionModal">Add Transaction</button>
                                         <table className="table table-striped">
                                             <thead>
                                                 <tr>
@@ -57,22 +57,26 @@ const Dashboard = () => {
                                 </div>
                             </div>
 
-                            <div className="modal fade" id="addTransactionModal" tabindex="1" aria-hidden="true">
+                            <div className="modal fade" id="addTransactionModal" tabIndex="1" aria-labelledby="addTransactionModalLabel"  aria-hidden="true">
                                 <div className="modal-dialog">
                                     <div className="modal-content">
                                         <div className="modal-header">
-                                            <h5 className="modal-title">Transaction</h5>
-                                            <button className="btn-close" aria-label="Close"></button>
+                                            <h5 className="modal-title" id="addTransactionModalLabel">Transaction</h5>
+                                            <button className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div className="modal-body">
                                             <form action="">
                                                 <div className="mb-3">
-                                                    <label htmlFor="" className="form-label">Description</label>
+                                                    <label htmlFor="description" className="form-label">Description</label>
                                                     <input type="text" className="form-contrtol" id="description" placeholder="Enter transaction"/>
                                                 </div>
                                                 <div className="mb-3">
-                                                    <label for="amount" className="form-label">Amount</label>
+                                                    <label htmlFor="amount" className="form-label">Amount</label>
                                                     <input type="number" className="form-control" id="amount" placeholder="Enter amount" />
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="date" className="form-label">Date</label>
+                                                    <input type="date" className="form-control" id="date" />
                                                 </div>
                                                 <button className="btn btn-primary">Save</button>
                                             </form>
