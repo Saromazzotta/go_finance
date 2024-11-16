@@ -1,3 +1,4 @@
+import Footer from "./Footer"
 import LoggedInNavBar from "./LoggedInNavBar"
 
 
@@ -8,12 +9,12 @@ const Dashboard = () => {
 
 
     return (
-        <div>
+        <div className="d-flex flex-column min-vh-100">
             <LoggedInNavBar />
 
             
 
-            <div className="container my-4">
+            <div className="container my-4 container flex-grow-1 d-flex justify-content-center align-items-center">
                 <div className="row">
                     <div className="cold-md-3">
                         <div className="card">
@@ -92,6 +93,7 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 
